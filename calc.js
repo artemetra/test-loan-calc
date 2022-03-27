@@ -10,7 +10,7 @@ var loan_val_p = document.getElementById("loan-amt-p")
 
 var result = document.getElementById("result")
 
-age_slider.oninput  = () => { 
+age_slider.oninput = () => { 
     age_val_p.innerHTML = age_slider.value
     result.innerHTML = calc_loan(loan_slider.value, age_slider.value) 
 } 
@@ -19,15 +19,16 @@ loan_slider.oninput = () => {
     result.innerHTML = calc_loan(loan_slider.value, age_slider.value) 
 } 
 
-var map_range = function(from, to, s) {
-    return to[0] + (s - from[0]) * (to[1] - to[0]) / (from[1] - from[0]);
-};
+/* https://stackoverflow.com/questions/10756313/javascript-jquery-map-a-range-of-numbers-to-another-range-of-numbers */
+const scale = (num, in_min, in_max, out_min, out_max) => (num - in_min) * (out_max - out_min) / (in_max - in_min) + out_min
 
 function calc_loan(sum, years) {
     // not working yet
-    var tax_thing = years - 1
+    var year_tax = Math.round(scale(years, 0, 20, -1, 26))
+    console.log(year_tax)
+    var tax_thing = (years - 1) + year_tax
     var res = Math.round(
-        sum * years/12 
+        sum * 1/(12*years)
         + tax_thing
     )
     return res
