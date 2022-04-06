@@ -24,13 +24,10 @@ const scale = (num, in_min, in_max, out_min, out_max) => (num - in_min) * (out_m
 
 function calc_loan(sum, years) {
     // not working yet
-    let year_tax = Math.round(scale(years, 0, 20, -1, 26))
-    console.log(year_tax)
-    let tax_thing = (years - 1) + year_tax
-    const factor = 1.114
-    const offset = 31
+    //  2.95–27.0%
+    let factor = scale(years, 1, 20, 0.0295, 0.27)
     let res = Math.round(
-        factor * (sum * 1/(12*years) + tax_thing - offset)
+        (sum / (years * 12 )) * (1 + factor)
     )
     return res
 }
